@@ -28,5 +28,16 @@
       "name": "lodash",
       "message": "Import individual methods from the Lodash module"
    }]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx"],
+        "moduleDirectory": [
+          "src",
+          "node_modules"
+        ]
+      }
+    }
   }
 }
