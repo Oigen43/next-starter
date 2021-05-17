@@ -16,6 +16,8 @@
 /build
 
 # misc
+.idea
+.vscode
 .DS_Store
 *.pem
 
@@ -32,3 +34,6 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# storybook
+storybook-static
