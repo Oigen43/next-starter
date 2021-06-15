@@ -1,5 +1,7 @@
 import PropTypes from 'prop-types';
 
+import * as routes from 'pages/routes';
+
 import 'styles/globals.scss';
 
 /* eslint-disable react/jsx-props-no-spreading */

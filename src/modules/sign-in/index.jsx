@@ -2,7 +2,7 @@ import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import useUser from 'resources/user/hooks';
+import useUser from 'resources/user/user.hooks';
 
 import FormInput from 'components/FormInput';
 
