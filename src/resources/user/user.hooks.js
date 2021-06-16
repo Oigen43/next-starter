@@ -1,9 +1,9 @@
 import useSWR from 'swr';
 
-import { signIn } from './user.api';
+import { getCurrentUser } from './user.api';
 
 export default function useUser() {
-  const { data, mutate, error } = useSWR('user', signIn);
+  const { data, mutate, error } = useSWR('user', getCurrentUser);
   const loading = !data && !error;
 
   return {

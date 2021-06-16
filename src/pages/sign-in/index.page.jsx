@@ -2,8 +2,7 @@ import * as yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import useUser from 'resources/user/user.hooks';
-
+import Button from 'components/Button';
 import FormInput from 'components/FormInput';
 
 import styles from './styles.module.scss';
@@ -36,6 +35,8 @@ export default function SignIn() {
           {...register('password')}
           errors={errors.password}
         />
+        <img alt="1" />
+        <Button>OPA</Button>
         <button type="submit">sss</button>
       </form>
     </div>

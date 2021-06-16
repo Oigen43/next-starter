@@ -1,3 +1,5 @@
-import apiClient from 'services/api.service';
+import api from 'services/api.service';
 
-export const signIn = (data) => apiClient.post('/account/signin', data);
+export const getCurrentUser = () => api.get('/users/current');
+
+export const signIn = (data) => api.post('/account/signin', data);
