@@ -4,12 +4,8 @@
     "es2021": true
   },
   "extends": [
-    "plugin:import/recommended",
-    "plugin:jsx-a11y/recommended",
-    "plugin:react/recommended",
-    "plugin:react-hooks/recommended",
-    "plugin:@next/next/recommended",
-    "airbnb"
+    "airbnb",
+    "next"
   ],
   "parserOptions": {
     "ecmaFeatures": {
@@ -18,13 +14,11 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "plugins": [
-    "react"
-  ],
   "rules": {
     "import/prefer-default-export": "off",
     "no-underscore-dangle": "off",
     "jsx-a11y/anchor-is-valid": "off",
+    "react/display-name": "off",
     "react/react-in-jsx-scope": "off",
     "react/jsx-props-no-spreading": "off",
     "react-hooks/rules-of-hooks": "error",
