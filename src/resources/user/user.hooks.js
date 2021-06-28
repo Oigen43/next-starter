@@ -1,15 +1,16 @@
-import useSWR from 'swr';
+import { useQuery } from 'react-query';
 
 import { getCurrentUser } from './user.api';
 
-export default function useUser() {
-  const { data, mutate, error } = useSWR('user', getCurrentUser);
-  const loading = !data && !error;
+export function useUser() {
+  const { data, isLoading } = useQuery('currentUser', getCurrentUser, {
+    retry: false,
+    refetchOnWindowFocus: false,
+    staleTime: Infinity,
+  });
 
   return {
-    loading,
-    error,
     user: data,
-    mutate,
+    userLoading: isLoading,
   };
 }

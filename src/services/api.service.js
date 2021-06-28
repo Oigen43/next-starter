@@ -8,9 +8,6 @@ function throwApiError({ message, status, data = {} }) {
   error.status = status;
   error.data = data;
 
-  // eslint-disable-next-line no-console
-  console.error(error);
-
   throw error;
 }
 

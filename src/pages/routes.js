@@ -1,6 +1,7 @@
 export const scope = {
   PUBLIC: 'public',
   PRIVATE: 'private',
+  NONE: null,
 };
 
 export const layout = {
@@ -9,15 +10,40 @@ export const layout = {
   NONE: null,
 };
 
-export const routes = {
+export const path = {
+  home: '/',
+  error: '/_error',
+  signIn: '/sign-in',
+  signUp: '/sign-up',
+  profile: '/profile',
+};
+
+export const configuration = {
+  home: {
+    path: path.home,
+    scope: scope.PRIVATE,
+    layout: layout.MAIN,
+  },
+  error: {
+    path: path.error,
+    scope: scope.NONE,
+    layout: layout.NONE,
+  },
   signIn: {
-    path: '/sign-in',
+    path: path.signIn,
     scope: scope.PUBLIC,
     layout: layout.AUTH,
   },
-  home: {
-    path: '/',
+  signUp: {
+    path: path.signUp,
+    scope: scope.PUBLIC,
+    layout: layout.AUTH,
+  },
+  profile: {
+    path: path.profile,
     scope: scope.PRIVATE,
     layout: layout.MAIN,
   },
 };
+
+export const configurations = Object.values(configuration);

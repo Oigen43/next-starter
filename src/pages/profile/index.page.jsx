@@ -1,15 +1,17 @@
 import Link from 'next/link';
 
-export default function Home() {
+export default function Profile() {
   return (
     <>
-      <h2>Home</h2>
+      <h2>Profile</h2>
+      <span>Firstname:</span>
+      <div />
       <Link href="/sign-in">
         <a>Sign In</a>
       </Link>
       <div />
-      <Link href="/profile">
-        <a>Profile</a>
+      <Link href="/">
+        <a>Home</a>
       </Link>
     </>
   );
