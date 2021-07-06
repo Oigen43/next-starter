@@ -2,7 +2,7 @@ import React from 'react';
 
 import Button from './index';
 
-const options = {
+export default {
   title: 'Components/Button',
   component: Button,
   argTypes: {
@@ -11,9 +11,7 @@ const options = {
   },
 };
 
-export default options;
-
-const Template = (children, ...args) => <Button {...args}>{children}</Button>;
+const Template = (args) => <Button {...args} />;
 
 export const Success = Template.bind({});
 Success.args = {
