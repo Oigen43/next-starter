@@ -9,7 +9,7 @@ export function useSignIn() {
   const queryClient = useQueryClient();
 
   return useMutation('currentUser', signIn, {
-    onSuccess: async (data) => {
+    onSettled: async (data) => {
       queryClient.setQueryData('currentUser', data);
     },
   });

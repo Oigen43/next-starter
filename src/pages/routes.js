@@ -12,6 +12,7 @@ export const layout = {
 
 export const path = {
   home: '/',
+  404: '/404',
   error: '/_error',
   signIn: '/sign-in',
   signUp: '/sign-up',
@@ -23,6 +24,11 @@ export const configuration = {
     path: path.home,
     scope: scope.PRIVATE,
     layout: layout.MAIN,
+  },
+  404: {
+    path: path['404'],
+    scope: scope.NONE,
+    layout: layout.NONE,
   },
   error: {
     path: path.error,

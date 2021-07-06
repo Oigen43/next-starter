@@ -1,15 +1,33 @@
-import qs from 'qs';
+// eslint-disable-next-line max-classes-per-file
 import axios from 'axios';
+import qs from 'qs';
 
-function throwApiError({ message, status, data = {} }) {
-  const error = new Error();
-  error.name = 'Request Error';
-  error.message = message;
-  error.status = status;
-  error.data = data;
+import config from 'config';
 
-  throw error;
+class ApiError extends Error {
+  constructor(status = 500, statusText = 'Internal Server Error', data) {
+    super(`${status} ${statusText}`);
+
+    this.constructor = ApiError;
+    this.__proto__ = ApiError.prototype; // eslint-disable-line no-proto
+
+    this.name = this.constructor.name;
+    this.data = data;
+    this.status = status;
+
+    if (Error.captureStackTrace) {
+      Error.captureStackTrace(this, this.constructor);
+    }
+  }
+
+  inspect() {
+    return this.stack;
+  }
 }
+const throwApiError = ({ status, statusText, data }) => {
+  console.error(`API Error: ${status} ${statusText}`, data); //eslint-disable-line
+  throw new ApiError(status, statusText, data);
+};
 
 class ApiClient {
   constructor(axiosConfig) {
@@ -19,9 +37,14 @@ class ApiClient {
     this._api.interceptors.response.use(
       (response) => response.data,
       (error) => {
+        if (axios.isCancel(error)) {
+          throw error;
+        }
+        // Axios Network Error & Timeout error dont have 'response' field
+        // https://github.com/axios/axios/issues/383
         const errorResponse = error.response || {
-          message: error.message,
           status: error.code,
+          statusText: error.message,
           data: error.data,
         };
 
@@ -30,7 +53,7 @@ class ApiClient {
           handler(errorResponse);
         });
 
-        throwApiError(errorResponse);
+        return throwApiError(errorResponse);
       },
     );
   }
@@ -83,7 +106,7 @@ class ApiClient {
 }
 
 export default new ApiClient({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: config.apiUrl,
   withCredentials: true,
   responseType: 'json',
   paramsSerializer: (params) => qs.stringify(params, { arrayFormat: 'brackets' }),

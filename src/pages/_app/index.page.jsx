@@ -1,18 +1,12 @@
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClientProvider } from 'react-query';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import PropTypes from 'prop-types';
+
+import queryClient from 'services/queryClient.service';
 
 import PageConfig from './PageConfig';
 
 import 'styles/globals.scss';
-
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      retry: false,
-    },
-  },
-});
 
 function App({ Component, pageProps }) {
   return (

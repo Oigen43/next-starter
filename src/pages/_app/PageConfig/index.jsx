@@ -5,15 +5,10 @@ import { useUser } from 'resources/user/user.hooks';
 
 import * as routes from 'pages/routes';
 
-import PrivateScope from './PrivateScope';
 import AuthLayout from './AuthLayout';
 import MainLayout from './MainLayout';
 
-const scopeToComponent = {
-  [routes.scope.PRIVATE]: PrivateScope,
-  [routes.scope.PUBLIC]: ({ children }) => children,
-  [routes.layout.NONE]: ({ children }) => children,
-};
+import 'resources/user/user.handlers';
 
 const layoutToComponent = {
   [routes.layout.MAIN]: MainLayout,
@@ -26,7 +21,6 @@ function PageConfig({ children }) {
   const { user, userLoading } = useUser();
 
   const page = routes.configurations.find((r) => r.path === router.route);
-  const Scope = scopeToComponent[page.scope];
   const Layout = layoutToComponent[page.layout];
 
   if (userLoading) return null;
@@ -49,11 +43,9 @@ function PageConfig({ children }) {
   }
 
   return (
-    <Scope>
-      <Layout>
-        {children}
-      </Layout>
-    </Scope>
+    <Layout>
+      {children}
+    </Layout>
   );
 }
 
