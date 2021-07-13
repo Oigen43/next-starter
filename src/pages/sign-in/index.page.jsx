@@ -1,10 +1,11 @@
 import * as yup from 'yup';
+import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import submitForm from 'helpers/submit-form';
+import handleError from 'helpers/handle-error';
 
-import { useSignIn } from 'resources/account/account.hooks';
+import { userActions } from 'resources/user/user.slice';
 
 import FormInput from 'components/FormInput';
 
@@ -16,14 +17,20 @@ const schema = yup.object().shape({
 });
 
 export default function SignIn() {
+  const dispatch = useDispatch();
   const {
     handleSubmit, register, setError, formState: { errors },
   } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const { mutateAsync: signIn } = useSignIn();
-  const onSubmit = submitForm(signIn, setError);
+  const onSubmit = async (data) => {
+    try {
+      await dispatch(userActions.signIn(data));
+    } catch (e) {
+      handleError(e, setError);
+    }
+  };
 
   return (
     <div className={styles.container}>

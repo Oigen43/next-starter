@@ -1,14 +1,16 @@
+import { useSelector } from 'react-redux';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 
-import { useUser } from 'resources/user/user.hooks';
+import { userSelectors } from 'resources/user/user.slice';
 
 import * as routes from 'pages/routes';
 
+import 'resources/user/user.handlers';
+
 import AuthLayout from './AuthLayout';
 import MainLayout from './MainLayout';
-
-import 'resources/user/user.handlers';
+import PrivateScope from './PrivateScope';
 
 const layoutToComponent = {
   [routes.layout.MAIN]: MainLayout,
@@ -16,14 +18,20 @@ const layoutToComponent = {
   [routes.layout.NONE]: ({ children }) => children,
 };
 
+const scopeToComponent = {
+  [routes.scope.PRIVATE]: PrivateScope,
+  [routes.scope.PUBLIC]: ({ children }) => children,
+  [routes.scope.NONE]: ({ children }) => children,
+};
+
 function PageConfig({ children }) {
   const router = useRouter();
-  const { user, userLoading } = useUser();
+
+  const user = useSelector(userSelectors.selectUser);
 
   const page = routes.configurations.find((r) => r.path === router.route);
   const Layout = layoutToComponent[page.layout];
-
-  if (userLoading) return null;
+  const Scope = scopeToComponent[page.scope];
 
   if (page.scope === routes.scope.PUBLIC && user) {
     router.push(router.query.to || routes.path.home);
@@ -43,9 +51,11 @@ function PageConfig({ children }) {
   }
 
   return (
-    <Layout>
-      {children}
-    </Layout>
+    <Scope>
+      <Layout>
+        {children}
+      </Layout>
+    </Scope>
   );
 }
 

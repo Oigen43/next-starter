@@ -4,7 +4,6 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import * as userApi from 'resources/user/user.api';
 
-// import Button from 'components/Button';
 import FormInput from 'components/FormInput';
 
 import styles from './styles.module.scss';
@@ -24,7 +23,6 @@ export default function SignIn() {
   });
 
   const onSubmit = async (data) => {
-    console.log('1');
     await userApi.signUp(data);
   };
 

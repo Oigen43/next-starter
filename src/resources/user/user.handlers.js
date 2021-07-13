@@ -1,13 +1,20 @@
-import Router from 'next/router';
+import api from 'services/api.service';
+import * as socketService from 'services/socket.service';
 
-import apiClient from 'services/api.service';
-import queryClient from 'services/queryClient.service';
+import store from 'resources/store';
+import { userSelectors, userActions } from 'resources/user/user.slice';
 
-import { path } from 'pages/routes';
-
-apiClient.on('error', async (error) => {
-  if (error.status === 401 && Router.pathname !== path.signIn) {
-    queryClient.clear();
-    await Router.push(path.signIn);
+api.on('error', (error) => {
+  if (error.status === 401) {
+    store.dispatch(userActions.signOut());
   }
+});
+
+socketService.on('connect', () => {
+  const user = userSelectors.selectUser(store.getState());
+  socketService.emit('subscribe', `user-${user._id}`);
+});
+
+socketService.on('user:updated', (user) => {
+  store.dispatch(userActions.setUser({ user }));
 });

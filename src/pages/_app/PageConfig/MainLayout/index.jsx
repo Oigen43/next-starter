@@ -1,16 +1,19 @@
 import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import Button from 'components/Button';
+import { userActions } from 'resources/user/user.slice';
 
-import { useSignOut } from 'resources/account/account.hooks';
+import Button from 'components/Button';
 
 import styles from './styles.module.scss';
 
 export default function MainLayout({ children }) {
-  const { mutateAsync: signOut } = useSignOut();
+  const dispatch = useDispatch();
 
-  const onSignOut = useCallback(() => signOut(), [signOut]);
+  const onSignOut = useCallback(async () => {
+    await dispatch(userActions.signOut());
+  }, [dispatch]);
 
   return (
     <>
